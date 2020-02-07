@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  application:
+    image: typeorm-entity-factory
+    container_name: typeorm-entity-factory
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      # Binds the application folder from the host inside the container for fast changes
+      - ./:/usr/src
+      # Ignores/Hides the node_modules from the bind on the host allowing the node_modules
+      # from inside the container to be used instead
+      - /usr/src/node_modules
+    depends_on:
+      - db
+    networks:
+      - backend
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - '5432:5432'
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: "bridge"
+
+volumes:
+  mysql-data:

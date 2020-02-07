@@ -1,0 +1,67 @@
+{
+  "name": "typeorm-entity-factory",
+  "author": "Adam Dubicki",
+  "version": "0.0.1",
+  "description": "A library for conveniently generating typeorm entities.",
+  "main": "./lib/main.js",
+  "types": "./lib/main.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "build:check": "tsc --noEmit",
+    "test": "jest --ci --runInBand"
+  },
+  "keywords": [
+    "typeorm",
+    "testing",
+    "typescript",
+    "seeding",
+    "jest",
+    "factory",
+    "seeder",
+    "faker"
+  ],
+  "license": "ISC",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "faker": "4.1.0",
+    "typeorm": "0.2.22"
+  },
+  "devDependencies": {
+    "@types/faker": "4.1.9",
+    "@types/jest": "24.9.1",
+    "@types/node": "13.1.8",
+    "jest": "25.1.0",
+    "jest-junit": "10.0.0",
+    "mysql": "2.18.1",
+    "pg": "7.18.1",
+    "ts-jest": "25.0.0",
+    "ts-node": "8.6.2",
+    "typescript": "3.7.5"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts",
+      "node"
+    ],
+    "moduleNameMapper": {
+      "^src(.*)$": "<rootDir>/src/$1"
+    },
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "./test-results/coverage",
+    "testEnvironment": "node"
+  },
+  "jest-junit": {
+    "outputDirectory": "./test-results"
+  }
+}
