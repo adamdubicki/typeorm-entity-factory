@@ -11,19 +11,18 @@ import * as Faker from 'faker';
  * 
  * @typeparam E: The Entity that the factory generates
  * @typeparam O: The additional options the make function can take
- * 
- * @property connection: The database connection 
  */
 export abstract class EntityFactory<E, O = {}> {
 
-  protected readonly faker: typeof Faker;
-
-  /** @constructor */
+  /** 
+   * @constructor
+   * @property connection: TypeORM Database connection
+   * @property faker: Faker library for having stub data
+   */
   constructor(
-    private readonly connection: Connection
-  ){
-    this.faker = Faker;
-  }
+    private readonly connection: Connection,
+    protected readonly faker: typeof Faker = Faker
+  ){}
 
   /**
    * @abstract
@@ -33,27 +32,51 @@ export abstract class EntityFactory<E, O = {}> {
    * of type E. makeOne, makeMany call this function to
    * generate an entity.
    * 
-   * @param
+   * @param overrides: Params to override object with
+   * @returns an instance of E
    */
-  abstract make(overrideParams?: Partial<E> & O): Promise<E>;
+  abstract make(overrides?: Partial<E> & O): Promise<E>;
 
   /**
    * @public
    * @summary
-   * Create and insert many entites into the database
+   * Create and insert many entities into the database
    * 
    * @param count: The number of entities to save (default is 1)
-   * @param options: The object to override with - passed down into make
+   * @param overrides: The object to override with - passed down into make
    * @returns An array of saved entities
    */
-  async saveMany(count = 1, options?: Partial<E> & O): Promise<E[]>{
+  async saveMany(count = 1, overrides?: Partial<E> & O): Promise<E[]>{
     const entityArray: E[] = [];
 
+    /** Create entities with make, apply override options */
     for await (const index of [...Array(count).keys()]) {
-      const entity = await this.make(options);
+      const entity: E = await this.make(overrides);
+
+      /** 
+       * Manually override each key of E.
+       * Loop through key of entity, if a value was passed into the override
+       * then set it on the entity. This assured we don't save a keyof O onto
+       * our entity of type E
+       */
+      if(overrides) {
+        const entityOverrides: Partial<E> = <Partial<E>>Object.assign({}, overrides);
+        Object.keys(entity).forEach(key => {
+          /** Grab the value at override[key] which is of type E[key] */
+          const overrideValue: E[keyof E] | undefined = entityOverrides[key as keyof E]!;
+
+          /** If the override is not undefined, we can set it on the entity */
+          if(typeof overrideValue !== undefined) {
+            entity[key as keyof E] = overrideValue;
+          }
+
+        });
+      }
+
       entityArray.push(entity);
     }
 
+    /** Save all of the entities */
     return this.connection.manager.save(await Promise.all(entityArray));
   }
 
@@ -62,11 +85,11 @@ export abstract class EntityFactory<E, O = {}> {
    * @summary
    * Create and insert one entity into the database
    * 
-   * @param options: The object to override with - passed down into make
+   * @param overrides: The object to override with - passed down into make()
    * @returns An entity
    */
-  async saveOne(options?: Partial<E> & O): Promise<E> {
-    const [ entity ] = (await this.saveMany(1, options));
+  async saveOne(overrides?: Partial<E> & O): Promise<E> {
+    const [ entity ] = (await this.saveMany(1, overrides));
     return entity;
   }
 }

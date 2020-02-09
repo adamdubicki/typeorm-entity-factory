@@ -8,7 +8,7 @@ Supports:
 
 * Databases - Post
 
-## Installation & Usage
+## Installation and QuickStart
 
 1. Configure your TypeORM managed database.
 `https://github.com/typeorm/typeorm`
@@ -17,9 +17,10 @@ Supports:
 
 `npm install ... --save-dev`
 
-3. Create a factory for an entity:
+3. Create a factory for your entities.
 
 ```
+@FactoryFor(Book)
 export class BookFactory extends EntityFactory<Book> {
   async make(): Promise<Book> {
     const book = new Book();
@@ -30,6 +31,28 @@ export class BookFactory extends EntityFactory<Book> {
     return book;
   }
 }
+```
+
+4. Pass your factory classes into the factory container.
+This will require the database connection to your entities.
+If you have multiple databases, you will need separate factory
+containers.
+
+```
+const connection: Connection = (retrieve your typeORM connection)
+
+const container = await FactoryContainer.init({
+  connection,
+  factories: [
+    BookFactory
+  ],
+});
+```
+
+5. Use your factory
+```
+// Create 25 Random Book Instances
+const books = await container.getFactory('Book').makeMany(25);
 ```
 
 

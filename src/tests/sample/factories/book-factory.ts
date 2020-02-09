@@ -1,6 +1,8 @@
 import { EntityFactory } from "../../..";
 import { Book } from './../entities/book';
+import { FactoryFor } from "../../../factory-for.decorator";
 
+@FactoryFor(Book)
 export class BookFactory extends EntityFactory<Book> {
   async make(): Promise<Book> {
     const book = new Book();
