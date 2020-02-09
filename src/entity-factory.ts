@@ -1,3 +1,4 @@
+import { FactoryContainer } from './factory-container';
 import { Connection } from 'typeorm';
 import * as Faker from 'faker';
 
@@ -17,10 +18,13 @@ export abstract class EntityFactory<E, O = {}> {
   /** 
    * @constructor
    * @property connection: TypeORM Database connection
+   * @property container: The factory container
+   * acts parent reference for using other factories within a factory
    * @property faker: Faker library for having stub data
    */
   constructor(
     private readonly connection: Connection,
+    protected readonly container: FactoryContainer,
     protected readonly faker: typeof Faker = Faker
   ){}
 

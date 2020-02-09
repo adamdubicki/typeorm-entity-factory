@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
+import { Genre } from './genre';
 
 @Entity()
 export class Book {
@@ -10,4 +11,8 @@ export class Book {
     name: 'title'
   })
   title: string;
+
+  @OneToOne(type => Genre, { onDelete: 'SET NULL' })
+  @JoinColumn()
+  genre: Genre;
 }

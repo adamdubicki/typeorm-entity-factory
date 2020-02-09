@@ -1,5 +1,6 @@
 import { EntityFactory } from ".";
 import { IFactoryContainerOptions } from './factory-container-options.interface';
+import { FACTORY_FOR_KEY } from "./constants";
 
 /**
  * @author Adam Dubicki
@@ -11,15 +12,15 @@ import { IFactoryContainerOptions } from './factory-container-options.interface'
  */
 export class FactoryContainer {
 
+  /** @property factories: A map from EntityName to its factory instance */
+  private factories: Map<string, EntityFactory<any, any>>
+
   /**
    * @constructor
    * @private
    * The constructor is private to force instantiation through static init()
-   * @property factories: A map from EntityName to its factory instance
    */
-  private constructor(
-    private factories: Map<string, EntityFactory<any, any>>
-  ){}
+  private constructor(){}
 
   /**
    * Instantiate a factory container and inject into all of the options.Factories.
@@ -33,10 +34,13 @@ export class FactoryContainer {
      * Loop through the array of factory classes
      * and inject the connection string.
      */
+    const container = new FactoryContainer();
     const factories = new Map<string, EntityFactory<any, any>>();
+
+    /** Instantiate all of the factory classes passed in via config */
     options.factories.forEach(FactoryClass => {
-      const entityName: string = Reflect.getMetadata('MyClassDecoratorKey', FactoryClass);
-      const factoryInstance = new FactoryClass(options.connection);
+      const entityName: string = Reflect.getMetadata(FACTORY_FOR_KEY, FactoryClass);
+      const factoryInstance = new FactoryClass(options.connection, container);
 
       if(!entityName) {
         throw new Error(`
@@ -48,7 +52,10 @@ export class FactoryContainer {
       factories.set(entityName, factoryInstance);
     });
 
-    return new FactoryContainer(factories);
+    /** Set the factory map */
+    container.factories = factories;
+
+    return container;
   }
 
   /**

@@ -8,7 +8,8 @@
   "scripts": {
     "build": "tsc",
     "build:check": "tsc --noEmit",
-    "test": "jest --ci --runInBand"
+    "test": "jest --ci --runInBand",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [
     "typeorm",

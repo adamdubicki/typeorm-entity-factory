@@ -1,22 +1,18 @@
+import { GenreFactory } from './sample/factories/genre-factory';
 import * as faker from 'faker';
 import { Connection } from 'typeorm';
 import { FactoryContainer } from './../factory-container';
-import { getConnection, clearDB } from './test-utils';
+import { getConnection, clearDB, getContainer } from './test-utils';
 import { BookFactory } from './sample/factories/book-factory';
 
 describe('entity-factory', () => {
 
-  let container: FactoryContainer;
   let connection: Connection;
+  let container: FactoryContainer;
 
   beforeAll(async () => {
     connection = await getConnection();
-    container = await FactoryContainer.init({
-      connection,
-      factories: [
-        BookFactory
-      ],
-    });
+    container = await getContainer(connection);
   });
 
   afterEach(async () => await clearDB(connection));
@@ -30,6 +26,7 @@ describe('entity-factory', () => {
 
   it('can provide for factories with init()', async () => {
     expect(container.getFactory('Book')).toBeDefined();
+    expect(container.getFactory('Genre')).toBeDefined();
     expect(true).toBe(true);
   });
 

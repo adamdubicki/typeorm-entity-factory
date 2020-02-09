@@ -1,5 +1,5 @@
 import * as faker from 'faker';
-import { getConnection, clearDB } from './test-utils';
+import { getConnection, clearDB, getContainer } from './test-utils';
 import { Book } from './sample/entities/book';
 import { Connection } from 'typeorm';
 import { BookFactory } from './sample/factories/book-factory';
@@ -11,7 +11,8 @@ describe('entity-factory', () => {
 
   beforeAll(async () => {
     connection = await getConnection();
-    bookFactory = new BookFactory(connection)
+    const container = await getContainer(connection);
+    bookFactory = container.getFactory('Book');
   })
 
   afterEach(async () => await clearDB(connection));
@@ -23,7 +24,6 @@ describe('entity-factory', () => {
     }
   })
 
-
   describe('saveOne()', () => {
     
     describe('bookFactory', () => {
@@ -32,11 +32,12 @@ describe('entity-factory', () => {
         const book = await bookFactory.saveOne();
         expect(book.id).toBeDefined()
         expect(book.title).toBeDefined();
+        expect(book.genre).toBeDefined()
         
         const [
           savedBooks,
           savedBooksCount
-        ] = await connection.manager.findAndCount(Book);
+        ] = await connection.manager.findAndCount(Book, { relations: ['genre'] });
         
         /** Check that the database has been updated with the new book */
         expect(savedBooksCount).toBe(1);
@@ -44,31 +45,37 @@ describe('entity-factory', () => {
         for(const book of savedBooks) {
           expect(book.id).toBeDefined();
           expect(book.title).toBeDefined();
+          expect(book.genre).toBeDefined()
         }
       });
 
       it('can instantiate a book with partial parameters', async () => {
         const BOOK_TITLE: string = faker.random.words();
+        const BOOK_COUNT: number = 10;
         const book = await bookFactory.saveOne({
+          title: BOOK_TITLE
+        });
+
+        await bookFactory.saveMany(10, {
           title: BOOK_TITLE
         });
 
         expect(book).toBeDefined();
         expect(book.title).toEqual(BOOK_TITLE);
 
-        const savedBook = await connection.manager.findOne(Book, {
+        const [savedBooks, count] = await connection.manager.findAndCount(Book, {
           where: {
             title: BOOK_TITLE
           }
         });
+        expect(count).toBe(BOOK_COUNT + 1);
 
-        
-        const result = await connection.manager.findAndCount(Book);
-
-        // expect(savedBook).not.toBeNull();
-        // expect(savedBook.id).toEqual(book.id);
-        // expect(savedBook.title).toEqual(BOOK_TITLE);
+        savedBooks.forEach(savedBook => {
+          expect(savedBook).not.toBeNull();
+          expect(savedBook.title).toEqual(BOOK_TITLE);
+        })
       });
+
     });
   });
 

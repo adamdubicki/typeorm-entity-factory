@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from "typeorm";
+import { Book } from './book';
 
 @Entity()
 export class Author {
@@ -16,4 +17,8 @@ export class Author {
     name: 'last_name'
   })
   lastName: string;
+
+  @ManyToMany(type => Book, { onDelete: 'CASCADE' })
+  @JoinTable()
+  books: Book[];
 }
