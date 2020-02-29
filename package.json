@@ -59,8 +59,8 @@
   },
   "lint-staged": {
     "*.{ts,js}": [
-      "npm run lint:fix",
-      "pretty-quick --staged"
+      "pretty-quick --staged",
+      "npm run lint:fix"
     ]
   },
   "jest": {

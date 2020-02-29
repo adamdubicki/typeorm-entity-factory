@@ -1,6 +1,6 @@
-import { EntityFactory } from ".";
-import { IFactoryContainerOptions } from "./factory-container-options.interface";
-import { FACTORY_FOR_KEY } from "./constants";
+import { EntityFactory } from '.';
+import { IFactoryContainerOptions } from './factory-container-options.interface';
+import { FACTORY_FOR_KEY } from './constants';
 
 /**
  * @author Adam Dubicki
@@ -21,7 +21,7 @@ export class FactoryContainer {
    * @returns a configured instance of the factory container
    */
   static async init(
-    options: IFactoryContainerOptions
+    options: IFactoryContainerOptions,
   ): Promise<FactoryContainer> {
     const container = new FactoryContainer();
     const factories = new Map<string, EntityFactory<any, any>>();
@@ -30,7 +30,7 @@ export class FactoryContainer {
     options.factories.forEach(FactoryClass => {
       const entityName: string = Reflect.getMetadata(
         FACTORY_FOR_KEY,
-        FactoryClass
+        FactoryClass,
       );
       const factoryInstance = new FactoryClass(options.connection, container);
 
@@ -58,7 +58,7 @@ export class FactoryContainer {
    */
   public getFactory<F extends EntityFactory<any, any>>(entityName: string): F {
     const factory: EntityFactory<any, any> | undefined = this.factories.get(
-      entityName
+      entityName,
     );
 
     if (factory !== undefined) {

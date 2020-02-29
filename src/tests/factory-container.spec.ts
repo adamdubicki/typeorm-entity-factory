@@ -1,11 +1,11 @@
-import * as faker from "faker";
-import { Connection } from "typeorm";
-import { GenreFactory } from "./sample/factories/genre-factory";
-import { FactoryContainer } from "../factory-container";
-import { getConnection, clearDB, getContainer } from "./test-utils";
-import { BookFactory } from "./sample/factories/book-factory";
+import * as faker from 'faker';
+import { Connection } from 'typeorm';
+import { GenreFactory } from './sample/factories/genre-factory';
+import { FactoryContainer } from '../factory-container';
+import { getConnection, clearDB, getContainer } from './test-utils';
+import { BookFactory } from './sample/factories/book-factory';
 
-describe("entity-factory", () => {
+describe('entity-factory', () => {
   let connection: Connection;
   let container: FactoryContainer;
 
@@ -23,13 +23,13 @@ describe("entity-factory", () => {
     }
   });
 
-  it("can provide for factories with init()", async () => {
-    expect(container.getFactory("Book")).toBeDefined();
-    expect(container.getFactory("Genre")).toBeDefined();
+  it('can provide for factories with init()', async () => {
+    expect(container.getFactory('Book')).toBeDefined();
+    expect(container.getFactory('Genre')).toBeDefined();
     expect(true).toBe(true);
   });
 
-  it("throws error when entity does not exist", async () => {
+  it('throws error when entity does not exist', async () => {
     let thrownError = null;
     const fakeEntityName: string = faker.random.uuid();
     try {
@@ -41,8 +41,8 @@ describe("entity-factory", () => {
     expect(thrownError).toBeDefined();
     expect(
       thrownError.message.indexOf(
-        `Unable to retrieve factory instance for key: ${fakeEntityName}`
-      )
+        `Unable to retrieve factory instance for key: ${fakeEntityName}`,
+      ),
     ).toBeGreaterThanOrEqual(0);
   });
 });

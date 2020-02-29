@@ -3,22 +3,22 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToOne,
-  JoinColumn
-} from "typeorm";
-import { Genre } from "./genre";
+  JoinColumn,
+} from 'typeorm';
+import { Genre } from './genre';
 
 @Entity()
 export class Book {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column("varchar", {
+  @Column('varchar', {
     length: 255,
-    name: "title"
+    name: 'title',
   })
   title: string;
 
-  @OneToOne(type => Genre, { onDelete: "SET NULL" })
+  @OneToOne(type => Genre, { onDelete: 'SET NULL' })
   @JoinColumn()
   genre: Genre;
 }

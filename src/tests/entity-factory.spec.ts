@@ -1,17 +1,17 @@
-import * as faker from "faker";
-import { Connection } from "typeorm";
-import { getConnection, clearDB, getContainer } from "./test-utils";
-import { Book } from "./sample/entities/book";
-import { BookFactory } from "./sample/factories/book-factory";
+import * as faker from 'faker';
+import { Connection } from 'typeorm';
+import { getConnection, clearDB, getContainer } from './test-utils';
+import { Book } from './sample/entities/book';
+import { BookFactory } from './sample/factories/book-factory';
 
-describe("entity-factory", () => {
+describe('entity-factory', () => {
   let bookFactory: BookFactory;
   let connection: Connection;
 
   beforeAll(async () => {
     connection = await getConnection();
     const container = await getContainer(connection);
-    bookFactory = container.getFactory("Book");
+    bookFactory = container.getFactory('Book');
   });
 
   afterEach(async () => clearDB(connection));
@@ -23,9 +23,9 @@ describe("entity-factory", () => {
     }
   });
 
-  describe("saveOne()", () => {
-    describe("bookFactory", () => {
-      it("can bulk instantiate entities", async () => {
+  describe('saveOne()', () => {
+    describe('bookFactory', () => {
+      it('can bulk instantiate entities', async () => {
         const book = await bookFactory.saveOne();
         expect(book.id).toBeDefined();
         expect(book.title).toBeDefined();
@@ -33,9 +33,9 @@ describe("entity-factory", () => {
 
         const [
           savedBooks,
-          savedBooksCount
+          savedBooksCount,
         ] = await connection.manager.findAndCount(Book, {
-          relations: ["genre"]
+          relations: ['genre'],
         });
 
         /** Check that the database has been updated with the new book */
@@ -48,15 +48,15 @@ describe("entity-factory", () => {
         }
       });
 
-      it("can instantiate a book with partial parameters", async () => {
+      it('can instantiate a book with partial parameters', async () => {
         const BOOK_TITLE: string = faker.random.words();
         const BOOK_COUNT: number = 10;
         const book = await bookFactory.saveOne({
-          title: BOOK_TITLE
+          title: BOOK_TITLE,
         });
 
         await bookFactory.saveMany(10, {
-          title: BOOK_TITLE
+          title: BOOK_TITLE,
         });
 
         expect(book).toBeDefined();
@@ -66,9 +66,9 @@ describe("entity-factory", () => {
           Book,
           {
             where: {
-              title: BOOK_TITLE
-            }
-          }
+              title: BOOK_TITLE,
+            },
+          },
         );
         expect(count).toBe(BOOK_COUNT + 1);
 
@@ -80,9 +80,9 @@ describe("entity-factory", () => {
     });
   });
 
-  describe("saveMany()", () => {
-    describe("bookFactory", () => {
-      it("can bulk instantiate entities", async () => {
+  describe('saveMany()', () => {
+    describe('bookFactory', () => {
+      it('can bulk instantiate entities', async () => {
         const BOOKS_COUNT = 1000;
 
         const books = await bookFactory.saveMany(BOOKS_COUNT);
@@ -96,7 +96,7 @@ describe("entity-factory", () => {
 
         const [
           savedBooks,
-          savedBooksCount
+          savedBooksCount,
         ] = await connection.manager.findAndCount(Book);
 
         /** Check that the saved books are saved and defined */

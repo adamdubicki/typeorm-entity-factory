@@ -1,6 +1,6 @@
-import { Connection } from "typeorm";
-import * as Faker from "faker";
-import { FactoryContainer } from "./factory-container";
+import { Connection } from 'typeorm';
+import * as Faker from 'faker';
+import { FactoryContainer } from './factory-container';
 
 /**
  * @abstract
@@ -24,7 +24,7 @@ export abstract class EntityFactory<E, O = {}> {
   constructor(
     private readonly connection: Connection,
     protected readonly container: FactoryContainer,
-    protected readonly faker: typeof Faker = Faker
+    protected readonly faker: typeof Faker = Faker,
   ) {}
 
   /**
@@ -71,7 +71,7 @@ export abstract class EntityFactory<E, O = {}> {
           ]!;
 
           /** If the override is not undefined, we can set it on the entity */
-          if (typeof overrideValue !== "undefined") {
+          if (typeof overrideValue !== 'undefined') {
             entity[key as keyof E] = overrideValue;
           }
         });

@@ -1,18 +1,19 @@
 module.exports = {
-  extends: ["airbnb-typescript/base"],
+  extends: ['airbnb-typescript/base'],
   parserOptions: {
-    project: "./tsconfig.json"
+    project: './tsconfig.json',
   },
   rules: {
-    "import/prefer-default-export": "off",
-    "import/no-cycle": "off",
-    "no-restricted-syntax": [
-      "error",
-      "ForInStatement",
-      "LabeledStatement",
-      "WithStatement"
+    'import/prefer-default-export': 'off',
+    'import/no-cycle': 'off',
+    'no-restricted-syntax': [
+      'error',
+      'ForInStatement',
+      'LabeledStatement',
+      'WithStatement',
     ],
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "off"
-  }
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    'arrow-parens': 'off',
+  },
 };

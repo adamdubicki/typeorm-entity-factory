@@ -1,10 +1,10 @@
-import { Connection, getConnectionManager } from "typeorm";
-import { GenreFactory } from "./sample/factories/genre-factory";
-import { BookFactory } from "./sample/factories/book-factory";
-import { FactoryContainer } from "../factory-container";
-import { Genre } from "./sample/entities/genre";
-import { Author } from "./sample/entities/author";
-import { Book } from "./sample/entities/book";
+import { Connection, getConnectionManager } from 'typeorm';
+import { GenreFactory } from './sample/factories/genre-factory';
+import { BookFactory } from './sample/factories/book-factory';
+import { FactoryContainer } from '../factory-container';
+import { Genre } from './sample/entities/genre';
+import { Author } from './sample/entities/author';
+import { Book } from './sample/entities/book';
 
 /**
  * Get a sample database connection for a fake postgres database
@@ -13,14 +13,14 @@ import { Book } from "./sample/entities/book";
 export const getConnection = async () => {
   const connectionManager = getConnectionManager();
   const connection = connectionManager.create({
-    type: "postgres",
-    host: "db",
+    type: 'postgres',
+    host: 'db',
     port: 5432,
-    username: "postgres",
-    password: "example",
-    database: "postgres",
+    username: 'postgres',
+    password: 'example',
+    database: 'postgres',
     entities: [Book, Genre, Author],
-    synchronize: true
+    synchronize: true,
   });
   return connection.connect();
 };
@@ -32,15 +32,13 @@ export const getConnection = async () => {
  * @returns an array of objects for name and tablename
  */
 export const getDBEntities = (
-  connection: Connection
+  connection: Connection,
 ): { name: string; tableName: string }[] => {
   const entities: { name: string; tableName: string }[] = [];
-  connection.entityMetadatas.forEach(({ name, tableName }) =>
-    entities.push({
-      name,
-      tableName
-    })
-  );
+  connection.entityMetadatas.forEach(({ name, tableName }) => entities.push({
+    name,
+    tableName,
+  }));
   return entities;
 };
 
@@ -66,9 +64,8 @@ export const clearDB = async (connection: Connection): Promise<void> => {
  * @returns an instantiated container
  */
 export const getContainer = async (
-  connection: Connection
-): Promise<FactoryContainer> =>
-  FactoryContainer.init({
-    connection,
-    factories: [BookFactory, GenreFactory]
-  });
+  connection: Connection,
+): Promise<FactoryContainer> => FactoryContainer.init({
+  connection,
+  factories: [BookFactory, GenreFactory],
+});

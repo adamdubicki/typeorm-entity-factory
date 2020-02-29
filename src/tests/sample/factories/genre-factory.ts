@@ -1,6 +1,6 @@
-import { EntityFactory } from "../../..";
-import { Genre } from "../entities/genre";
-import { FactoryFor } from "../../../factory-for.decorator";
+import { EntityFactory } from '../../..';
+import { Genre } from '../entities/genre';
+import { FactoryFor } from '../../../factory-for.decorator';
 
 @FactoryFor(Genre)
 export class GenreFactory extends EntityFactory<Genre> {
