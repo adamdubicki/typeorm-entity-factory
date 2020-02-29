@@ -1,55 +1,54 @@
-import * as faker from 'faker';
-import { getConnection, clearDB, getContainer } from './test-utils';
-import { Book } from './sample/entities/book';
-import { Connection } from 'typeorm';
-import { BookFactory } from './sample/factories/book-factory';
+import * as faker from "faker";
+import { Connection } from "typeorm";
+import { getConnection, clearDB, getContainer } from "./test-utils";
+import { Book } from "./sample/entities/book";
+import { BookFactory } from "./sample/factories/book-factory";
 
-describe('entity-factory', () => {
-
+describe("entity-factory", () => {
   let bookFactory: BookFactory;
   let connection: Connection;
 
   beforeAll(async () => {
     connection = await getConnection();
     const container = await getContainer(connection);
-    bookFactory = container.getFactory('Book');
-  })
+    bookFactory = container.getFactory("Book");
+  });
 
-  afterEach(async () => await clearDB(connection));
+  afterEach(async () => clearDB(connection));
 
   afterAll(async () => {
     await clearDB(connection);
     if (connection.isConnected) {
       await connection.close();
     }
-  })
+  });
 
-  describe('saveOne()', () => {
-    
-    describe('bookFactory', () => {
-
-      it('can bulk instantiate entities', async() => {
+  describe("saveOne()", () => {
+    describe("bookFactory", () => {
+      it("can bulk instantiate entities", async () => {
         const book = await bookFactory.saveOne();
-        expect(book.id).toBeDefined()
+        expect(book.id).toBeDefined();
         expect(book.title).toBeDefined();
-        expect(book.genre).toBeDefined()
-        
+        expect(book.genre).toBeDefined();
+
         const [
           savedBooks,
           savedBooksCount
-        ] = await connection.manager.findAndCount(Book, { relations: ['genre'] });
-        
+        ] = await connection.manager.findAndCount(Book, {
+          relations: ["genre"]
+        });
+
         /** Check that the database has been updated with the new book */
         expect(savedBooksCount).toBe(1);
-        expect(savedBooksCount).toEqual(savedBooks.length)
-        for(const book of savedBooks) {
-          expect(book.id).toBeDefined();
-          expect(book.title).toBeDefined();
-          expect(book.genre).toBeDefined()
+        expect(savedBooksCount).toEqual(savedBooks.length);
+        for (const savedBook of savedBooks) {
+          expect(savedBook.id).toBeDefined();
+          expect(savedBook.title).toBeDefined();
+          expect(savedBook.genre).toBeDefined();
         }
       });
 
-      it('can instantiate a book with partial parameters', async () => {
+      it("can instantiate a book with partial parameters", async () => {
         const BOOK_TITLE: string = faker.random.words();
         const BOOK_COUNT: number = 10;
         const book = await bookFactory.saveOne({
@@ -63,27 +62,27 @@ describe('entity-factory', () => {
         expect(book).toBeDefined();
         expect(book.title).toEqual(BOOK_TITLE);
 
-        const [savedBooks, count] = await connection.manager.findAndCount(Book, {
-          where: {
-            title: BOOK_TITLE
+        const [savedBooks, count] = await connection.manager.findAndCount(
+          Book,
+          {
+            where: {
+              title: BOOK_TITLE
+            }
           }
-        });
+        );
         expect(count).toBe(BOOK_COUNT + 1);
 
         savedBooks.forEach(savedBook => {
           expect(savedBook).not.toBeNull();
           expect(savedBook.title).toEqual(BOOK_TITLE);
-        })
+        });
       });
-
     });
   });
 
-  describe('saveMany()', () => {
-
-    describe('bookFactory', () => {
-
-      it('can bulk instantiate entities', async() => {
+  describe("saveMany()", () => {
+    describe("bookFactory", () => {
+      it("can bulk instantiate entities", async () => {
         const BOOKS_COUNT = 1000;
 
         const books = await bookFactory.saveMany(BOOKS_COUNT);
@@ -101,9 +100,9 @@ describe('entity-factory', () => {
         ] = await connection.manager.findAndCount(Book);
 
         /** Check that the saved books are saved and defined */
-        expect(savedBooksCount).toEqual(BOOKS_COUNT)
-        expect(savedBooksCount).toEqual(savedBooks.length)
-        for(const book of savedBooks) {
+        expect(savedBooksCount).toEqual(BOOKS_COUNT);
+        expect(savedBooksCount).toEqual(savedBooks.length);
+        for (const book of savedBooks) {
           expect(book.id).toBeDefined();
           expect(book.title).toBeDefined();
         }

@@ -2,12 +2,12 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
 export class Genre {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryGeneratedColumn("increment")
   id: string;
 
-  @Column('varchar', {
+  @Column("varchar", {
     length: 255,
-    name: 'name'
+    name: "name"
   })
   name: string;
 }

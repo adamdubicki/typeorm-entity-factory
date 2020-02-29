@@ -2,14 +2,16 @@
   "name": "typeorm-entity-factory",
   "author": "Adam Dubicki",
   "version": "0.0.1",
-  "description": "A library for conveniently generating typeorm entities.",
+  "description": "A library for generating typeorm entities in bulk.",
   "main": "./lib/main.js",
   "types": "./lib/main.d.ts",
   "scripts": {
     "build": "tsc",
     "build:check": "tsc --noEmit",
     "test": "jest --ci --runInBand",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "lint": "eslint . --ext .js,ts",
+    "lint:fix": "eslint . --ext .js,ts --fix"
   },
   "keywords": [
     "typeorm",
@@ -33,13 +35,33 @@
     "@types/faker": "4.1.9",
     "@types/jest": "24.9.1",
     "@types/node": "13.1.8",
+    "@typescript-eslint/eslint-plugin": "2.21.0",
+    "@typescript-eslint/parser": "2.21.0",
+    "eslint": "6.8.0",
+    "eslint-config-airbnb-typescript": "7.0.0",
+    "eslint-plugin-import": "2.20.1",
+    "husky": "4.2.3",
     "jest": "25.1.0",
     "jest-junit": "10.0.0",
+    "lint-staged": "10.0.8",
     "mysql": "2.18.1",
     "pg": "7.18.1",
+    "prettier": "1.19.1",
+    "pretty-quick": "2.0.1",
     "ts-jest": "25.0.0",
     "ts-node": "8.6.2",
     "typescript": "3.7.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "npm run lint:fix",
+      "pretty-quick --staged"
+    ]
   },
   "jest": {
     "moduleFileExtensions": [

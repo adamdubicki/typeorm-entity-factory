@@ -1,5 +1,5 @@
 import { EntityFactory } from "../../..";
-import { Book } from './../entities/book';
+import { Book } from "../entities/book";
 import { FactoryFor } from "../../../factory-for.decorator";
 
 @FactoryFor(Book)
@@ -9,8 +9,8 @@ export class BookFactory extends EntityFactory<Book> {
 
     book.id = this.faker.random.uuid();
     book.title = this.faker.name.title();
-    book.genre = await this.container.getFactory('Genre').saveOne()
-    
+    book.genre = await this.container.getFactory("Genre").saveOne();
+
     return book;
   }
 }

@@ -1,24 +1,30 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from "typeorm";
-import { Book } from './book';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable
+} from "typeorm";
+import { Book } from "./book";
 
 @Entity()
 export class Author {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column('varchar', {
+  @Column("varchar", {
     length: 255,
-    name: 'first_name'
+    name: "first_name"
   })
   firstName: string;
 
-  @Column('varchar', {
+  @Column("varchar", {
     length: 255,
-    name: 'last_name'
+    name: "last_name"
   })
   lastName: string;
 
-  @ManyToMany(type => Book, { onDelete: 'CASCADE' })
+  @ManyToMany(type => Book, { onDelete: "CASCADE" })
   @JoinTable()
   books: Book[];
 }

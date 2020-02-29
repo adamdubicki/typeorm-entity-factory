@@ -13,14 +13,8 @@
     "strict": true,
     "strictPropertyInitialization": false,
     "experimentalDecorators": true,
-    "downlevelIteration": true,
+    "downlevelIteration": true
   },
-  "exclude": [
-    "lib",
-    "node_modules",
-    "src/**/*.spec.ts"
-  ],
-  "include": [
-    "src"
-  ]
+  "exclude": ["lib", "node_modules"],
+  "include": ["src"]
 }

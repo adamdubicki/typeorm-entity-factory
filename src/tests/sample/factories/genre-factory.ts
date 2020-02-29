@@ -1,5 +1,5 @@
 import { EntityFactory } from "../../..";
-import { Genre } from './../entities/genre';
+import { Genre } from "../entities/genre";
 import { FactoryFor } from "../../../factory-for.decorator";
 
 @FactoryFor(Genre)
