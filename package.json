@@ -82,7 +82,10 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "coverageDirectory": "./test-results/coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "<rootDir>/src/tests/test-utils"
+    ]
   },
   "jest-junit": {
     "outputDirectory": "./test-results"

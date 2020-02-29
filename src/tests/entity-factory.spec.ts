@@ -11,7 +11,7 @@ describe('entity-factory', () => {
   beforeAll(async () => {
     connection = await getConnection();
     const container = await getContainer(connection);
-    bookFactory = container.getFactory('Book');
+    bookFactory = container.getFactory(Book);
   });
 
   afterEach(async () => clearDB(connection));
@@ -83,7 +83,7 @@ describe('entity-factory', () => {
   describe('saveMany()', () => {
     describe('bookFactory', () => {
       it('can bulk instantiate entities', async () => {
-        const BOOKS_COUNT = 1000;
+        const BOOKS_COUNT = 100;
 
         const books = await bookFactory.saveMany(BOOKS_COUNT);
 

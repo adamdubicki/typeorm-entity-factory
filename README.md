@@ -1,11 +1,11 @@
 # TypeORM-Entity-Factory
 
-A module for saving bulk entities into a database via TypeORM. Useful for E2E database testing.
+A module for saving bulk entities into a database via TypeORM for E2E database testing.
 
 ## Quickstart
 
-1. Configure your TypeORM managed database. 
-`https://github.com/typeorm/typeorm` 
+1. Configure your TypeORM managed database.
+   `https://github.com/typeorm/typeorm`
 
 2. Install the npm package:
 
@@ -15,15 +15,14 @@ A module for saving bulk entities into a database via TypeORM. Useful for E2E da
 
 ... TODO ... put DB diagram.
 
-After creating your entities via TypeORM we can create a `Factory` for the entity. A factory class will allow us to specify default stub data to use when creating an entity. 
+After creating your entities via TypeORM we can create a `Factory` for the entity. A factory class will allow us to specify default stub data to use when creating an entity.
 
 ... TODO put sample factory classes here ...
 
-
 4. Pass your factory classes into the factory container.
-This will require the database connection to your entities.
-If you have multiple databases, you will need separate factory
-containers.
+   This will require the database connection to your entities.
+   If you have multiple databases, you will need separate factory
+   containers.
 
 ```
 const connection: Connection = (retrieve your typeORM connection)
@@ -37,6 +36,7 @@ const container = await FactoryContainer.init({
 ```
 
 5. Use your factory within your tests.
+
 ```
 // Create 25 random book instances
 const books = await container.getFactory('Book').saveMany(25);
@@ -56,3 +56,17 @@ await bookFactory.saveMany(25, { title: 'Slaughterhouse-Five' });
 ```
 
 The factory will map any override parameters onto the entity so long as an entity has a matching property.
+
+## Local development
+
+This repository uses docker-compose for it's local development. Please refer to the [docker documentation](https://docs.docker.com/install/]) for installing docker onto your machine.
+
+To use this repository for development:
+
+1. Clone the repository: `git clone https://github.com/adamdubicki/typeorm-entity-factory.git`
+
+2. Instantiate the development and database container: `docker-compose up -d` The development container is configured with npm and a test suite for experimenting with changes. The docker-compose.yml maps the src files into the container, changes made in your local repository will be reflected in the container.
+
+3. You can then shell into the development container with `docker exec -it typeorm-entity-factory /bin/bash`.
+
+4. From within the container you can run the test suite with `npm run test`.

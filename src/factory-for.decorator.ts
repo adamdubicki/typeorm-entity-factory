@@ -16,8 +16,7 @@ import { FACTORY_FOR_KEY } from 'src/constants';
  * @param entity: The entity class to map to in container
  * @returns TS class decorator function
  */
-export const FactoryFor = (Entity: any) => (target: any) => {
-  const entityInstance = new Entity();
-  const entityName = entityInstance.constructor.name;
+export const FactoryFor = (entity: any) => (target: any) => {
+  const entityName: string = new entity()?.constructor?.name;
   Reflect.defineMetadata(FACTORY_FOR_KEY, entityName, target);
 };

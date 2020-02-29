@@ -53,10 +53,21 @@ export class FactoryContainer {
   /**
    * Get a factory instance from entityName
    *
-   * @param entityName: The name of the entity to retrieve the factory for
+   * @param entity: The entity to retrieve the factory for
    * @returns the factory F from the factories map on the container
    */
-  public getFactory<F extends EntityFactory<any, any>>(entityName: string): F {
+  public getFactory<F extends EntityFactory<any, any>, E>(entity: {
+    new (...args: any[]): any;
+  }): F {
+    const entityInstance = new entity();
+    const entityName: string = entityInstance?.constructor?.name;
+    if (!entityName) {
+      throw new Error(`
+        Unable to find constructor name for entity parameter.
+        This is likely because you did not pass in a class.
+      `);
+    }
+
     const factory: EntityFactory<any, any> | undefined = this.factories.get(
       entityName,
     );
