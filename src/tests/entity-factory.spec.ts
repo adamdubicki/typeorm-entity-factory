@@ -1,8 +1,8 @@
 import * as faker from 'faker';
 import { Connection } from 'typeorm';
-import { getConnection, clearDB, getContainer } from './test-utils';
-import { Book } from './sample/entities/book';
-import { BookFactory } from './sample/factories/book-factory';
+import { getConnection, clearDB, getContainer } from 'src/tests/test-utils';
+import { Book } from 'src/tests/sample/entities/book';
+import { BookFactory } from 'src/tests/sample/factories/book-factory';
 
 describe('entity-factory', () => {
   let bookFactory: BookFactory;

@@ -5,7 +5,7 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-import { Genre } from './genre';
+import { Genre } from 'src/tests/sample/entities/genre';
 
 @Entity()
 export class Book {

@@ -1,6 +1,6 @@
 import { Connection } from 'typeorm';
 import * as Faker from 'faker';
-import { FactoryContainer } from './factory-container';
+import { FactoryContainer } from 'src/factory-container';
 
 /**
  * @abstract

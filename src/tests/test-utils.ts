@@ -1,10 +1,10 @@
 import { Connection, getConnectionManager } from 'typeorm';
-import { GenreFactory } from './sample/factories/genre-factory';
-import { BookFactory } from './sample/factories/book-factory';
-import { FactoryContainer } from '../factory-container';
-import { Genre } from './sample/entities/genre';
-import { Author } from './sample/entities/author';
-import { Book } from './sample/entities/book';
+import { FactoryContainer } from 'src/factory-container';
+import { GenreFactory } from 'src/tests/sample/factories/genre-factory';
+import { BookFactory } from 'src/tests/sample/factories/book-factory';
+import { Genre } from 'src/tests/sample/entities/genre';
+import { Author } from 'src/tests/sample/entities/author';
+import { Book } from 'src/tests/sample/entities/book';
 
 /**
  * Get a sample database connection for a fake postgres database
@@ -29,7 +29,7 @@ export const getConnection = async () => {
  * Get all of the database entities associated with a database connection
  *
  * @param connection: A database connection string
- * @returns an array of objects for name and tablename
+ * @returns an array of objects for name and table name
  */
 export const getDBEntities = (
   connection: Connection,

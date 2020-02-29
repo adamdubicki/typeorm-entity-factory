@@ -13,7 +13,11 @@
     "strict": true,
     "strictPropertyInitialization": false,
     "experimentalDecorators": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"]
+    }
   },
   "exclude": ["lib", "node_modules"],
   "include": ["src"]

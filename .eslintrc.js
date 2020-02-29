@@ -15,5 +15,6 @@ module.exports = {
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
     'arrow-parens': 'off',
+    'import/no-unresolved': 'off',
   },
 };

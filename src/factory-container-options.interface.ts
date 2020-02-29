@@ -1,5 +1,5 @@
 import { Connection } from 'typeorm';
-import { EntityFactory } from '.';
+import { EntityFactory } from 'src/entity-factory';
 
 /**
  * @interface

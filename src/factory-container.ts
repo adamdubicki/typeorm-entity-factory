@@ -1,6 +1,6 @@
-import { EntityFactory } from '.';
-import { IFactoryContainerOptions } from './factory-container-options.interface';
-import { FACTORY_FOR_KEY } from './constants';
+import { EntityFactory } from 'src/entity-factory';
+import { IFactoryContainerOptions } from 'src/factory-container-options.interface';
+import { FACTORY_FOR_KEY } from 'src/constants';
 
 /**
  * @author Adam Dubicki

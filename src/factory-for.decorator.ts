@@ -1,4 +1,4 @@
-import { FACTORY_FOR_KEY } from './constants';
+import { FACTORY_FOR_KEY } from 'src/constants';
 
 /**
  * The FactoryContainer maps entity class name strings

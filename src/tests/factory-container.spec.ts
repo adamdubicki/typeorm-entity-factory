@@ -1,9 +1,9 @@
 import * as faker from 'faker';
 import { Connection } from 'typeorm';
-import { GenreFactory } from './sample/factories/genre-factory';
-import { FactoryContainer } from '../factory-container';
-import { getConnection, clearDB, getContainer } from './test-utils';
-import { BookFactory } from './sample/factories/book-factory';
+import { GenreFactory } from 'src/tests/sample/factories/genre-factory';
+import { FactoryContainer } from 'src/factory-container';
+import { getConnection, clearDB, getContainer } from 'src/tests/test-utils';
+import { BookFactory } from 'src/tests/sample/factories/book-factory';
 
 describe('entity-factory', () => {
   let connection: Connection;
