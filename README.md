@@ -4,6 +4,10 @@ A module for saving bulk entities into a database via TypeORM for E2E database t
 
 ```npm i typeorm-entity-factory --save-dev```
 
+## State of Library
+
+This module is currently in testing phase. Before version 1.0.0 is released all of the development is considered experimental is subject to change.
+
 ## Motivation
 
 For E2E testing it is useful to have sample data within a database for testing queries. Unfortunately, inserting hundreds of entities can be a tedious. Furthermore, with relational data it is time-consuming to ensure that the data is varied enough for thorough testing.
