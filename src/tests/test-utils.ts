@@ -2,6 +2,7 @@ import { Connection, getConnectionManager } from 'typeorm';
 import { FactoryContainer } from 'src/factory-container';
 import { GenreFactory } from 'src/tests/sample/factories/genre-factory';
 import { BookFactory } from 'src/tests/sample/factories/book-factory';
+import { AuthorFactory } from 'src/tests/sample/factories/author-factory';
 import { Genre } from 'src/tests/sample/entities/genre';
 import { Author } from 'src/tests/sample/entities/author';
 import { Book } from 'src/tests/sample/entities/book';
@@ -67,5 +68,5 @@ export const getContainer = async (
   connection: Connection,
 ): Promise<FactoryContainer> => FactoryContainer.init({
   connection,
-  factories: [BookFactory, GenreFactory],
+  factories: [BookFactory, GenreFactory, AuthorFactory],
 });

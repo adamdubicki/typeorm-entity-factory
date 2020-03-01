@@ -2,7 +2,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToOne,
+  ManyToOne,
   JoinColumn,
 } from 'typeorm';
 import { Genre } from 'src/tests/sample/entities/genre';
@@ -18,7 +18,7 @@ export class Book {
   })
   title: string;
 
-  @OneToOne(type => Genre, { onDelete: 'SET NULL' })
+  @ManyToOne(type => Genre, { onDelete: 'SET NULL' })
   @JoinColumn()
   genre: Genre;
 }

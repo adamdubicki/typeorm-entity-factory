@@ -1,16 +1,20 @@
+import { Author } from 'src/tests/sample/entities/author';
+import { Genre } from 'src/tests/sample/entities/genre';
 import * as faker from 'faker';
 import { Connection } from 'typeorm';
 import { getConnection, clearDB, getContainer } from 'src/tests/test-utils';
 import { Book } from 'src/tests/sample/entities/book';
 import { BookFactory } from 'src/tests/sample/factories/book-factory';
+import { FactoryContainer } from 'src/factory-container';
 
 describe('entity-factory', () => {
   let bookFactory: BookFactory;
   let connection: Connection;
+  let container: FactoryContainer;
 
   beforeAll(async () => {
     connection = await getConnection();
-    const container = await getContainer(connection);
+    container = await getContainer(connection);
     bookFactory = container.getFactory(Book);
   });
 
@@ -54,6 +58,7 @@ describe('entity-factory', () => {
         const book = await bookFactory.saveOne({
           title: BOOK_TITLE,
         });
+        console.log(await container.getFactory(Author).saveOne());
 
         await bookFactory.saveMany(10, {
           title: BOOK_TITLE,
