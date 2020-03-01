@@ -2,6 +2,8 @@
 
 A module for saving bulk entities into a database via TypeORM for E2E database testing.
 
+```npm install npm i typeorm-entity-factory --save-dev```
+
 ## Motivation
 
 For E2E testing it is useful to have sample data within a database for testing queries. Unfortunately, inserting hundreds of entities can be a tedious. Furthermore, with relational data it is time-consuming to ensure that the data is varied enough for thorough testing.
@@ -141,7 +143,7 @@ This quick-start assumes you already have a TypeORM database: `https://github.co
 
 For the examples below we will be using a simple database schema.
 
-![Sample ERD](/images/sample-erd.png)
+![Sample ERD](https://github.com/adamdubicki/typeorm-entity-factory/blob/master/images/sample-erd.png)
 
 In this simple example, an author writes many books, and book belongs to a single genre.
 These map to the following TypeORM entities:
