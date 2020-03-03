@@ -8,6 +8,12 @@ A module for saving bulk entities into a database via TypeORM for E2E database t
 
 This module is currently in testing phase. Before version 1.0.0 is released all of the development is considered experimental is subject to change.
 
+Things to add:
+
+* NestJS example
+* Contribution guidelines
+* CI/CD
+
 ## Motivation
 
 For E2E testing it is useful to have sample data within a database for testing queries. Unfortunately, inserting hundreds of entities can be a tedious. Furthermore, with relational data it is time-consuming to ensure that the data is varied enough for thorough testing.
@@ -147,7 +153,10 @@ This quick-start assumes you already have a TypeORM database: `https://github.co
 
 For the examples below we will be using a simple database schema.
 
-![Sample ERD](https://github.com/adamdubicki/typeorm-entity-factory/blob/master/images/sample-entity-relationship-diagram.png)
+<p align="center">
+  <img src="https://github.com/adamdubicki/typeorm-entity-factory/blob/master/images/sample-entity-relationship-diagram.png" width="400" alt="Sample ERD" />
+</p>
+)
 
 In this simple example, an author writes many books, and book belongs to a single genre.
 These map to the following TypeORM entities:
