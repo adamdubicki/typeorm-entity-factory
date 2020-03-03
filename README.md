@@ -154,9 +154,8 @@ This quick-start assumes you already have a TypeORM database: `https://github.co
 For the examples below we will be using a simple database schema.
 
 <p align="center">
-  <img src="https://github.com/adamdubicki/typeorm-entity-factory/blob/master/images/sample-entity-relationship-diagram.png" width="400" alt="Sample ERD" />
+  <img src="https://raw.githubusercontent.com/adamdubicki/typeorm-entity-factory/master/images/sample-entity-relationship-diagram.png" width="400" alt="Sample ERD" />
 </p>
-)
 
 In this simple example, an author writes many books, and book belongs to a single genre.
 These map to the following TypeORM entities:
