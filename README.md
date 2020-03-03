@@ -154,7 +154,7 @@ This quick-start assumes you already have a TypeORM database: `https://github.co
 For the examples below we will be using a simple database schema.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/adamdubicki/typeorm-entity-factory/master/images/sample-entity-relationship-diagram.png" width="400" alt="Sample ERD" />
+  <img src="https://raw.githubusercontent.com/adamdubicki/typeorm-entity-factory/master/images/sample-entity-relationship-diagram.png" width="600" alt="Sample ERD" />
 </p>
 
 In this simple example, an author writes many books, and book belongs to a single genre.
@@ -297,7 +297,7 @@ export class BookFactory extends EntityFactory<Book> {
 }
 ```
 
-The BookFactory that we declared creates its own Genre using the GenreFactory we declared earlier. Factories can be 'nested' in this way for creating data with relations.
+The BookFactory creates its own Genre using the GenreFactory we declared earlier. Factories can be 'nested' in this way for creating data with relations.
 
 Just like the GenreFactory, the BookFactory has to be injected into the container so that all factory references can be resolved at run-time.
 
