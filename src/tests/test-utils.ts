@@ -15,7 +15,7 @@ export const getConnection = async () => {
   const connectionManager = getConnectionManager();
   const connection = connectionManager.create({
     type: 'postgres',
-    host: 'db',
+    host: process.env.ENVIRONMENT === 'ci' ? 'localhost' : 'db',
     port: 5432,
     username: 'postgres',
     password: 'example',

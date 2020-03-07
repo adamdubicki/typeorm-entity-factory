@@ -1,5 +1,3 @@
-import { Author } from 'src/tests/sample/entities/author';
-import { Genre } from 'src/tests/sample/entities/genre';
 import * as faker from 'faker';
 import { Connection } from 'typeorm';
 import { getConnection, clearDB, getContainer } from 'src/tests/test-utils';
@@ -58,7 +56,6 @@ describe('entity-factory', () => {
         const book = await bookFactory.saveOne({
           title: BOOK_TITLE,
         });
-        console.log(await container.getFactory(Author).saveOne());
 
         await bookFactory.saveMany(10, {
           title: BOOK_TITLE,
