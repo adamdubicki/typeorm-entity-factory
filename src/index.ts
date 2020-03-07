@@ -1,4 +1,4 @@
-import { EntityFactory } from 'src/entity-factory';
-import { FactoryContainer } from 'src/factory-container';
-
-export { EntityFactory, FactoryContainer };
+export * from './entity-factory';
+export * from './factory-container';
+export * from './factory-for.decorator';
+export * from './factory-container-options.interface';

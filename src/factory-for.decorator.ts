@@ -1,5 +1,3 @@
-import { FACTORY_FOR_KEY } from 'src/constants';
-
 /**
  * The FactoryContainer maps entity class name strings
  * to their respective factory classes.
@@ -18,5 +16,5 @@ import { FACTORY_FOR_KEY } from 'src/constants';
  */
 export const FactoryFor = (entity: any) => (target: any) => {
   const entityName: string = new entity()?.constructor?.name;
-  Reflect.defineMetadata(FACTORY_FOR_KEY, entityName, target);
+  Reflect.defineMetadata('typeorm-entity-factory:FactoryFor', entityName, target);
 };

@@ -406,6 +406,12 @@ await authorFactory.saveOne();
  */
 ```
 
+## Examples
+
+See the examples directory for integrations.
+Currently there are example projects for:
+* NestJS
+
 ## Local development
 
 This repository uses docker-compose for it's local development. Please refer to the [docker documentation](https://docs.docker.com/install/]) for installing docker onto your machine.
