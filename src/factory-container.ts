@@ -1,6 +1,5 @@
 import { EntityFactory } from 'src/entity-factory';
 import { IFactoryContainerOptions } from 'src/factory-container-options.interface';
-import { FACTORY_FOR_KEY } from 'src/constants';
 
 /**
  * @author Adam Dubicki
@@ -29,7 +28,7 @@ export class FactoryContainer {
     /** Instantiate all of the factory classes passed in via config */
     options.factories.forEach(FactoryClass => {
       const entityName: string = Reflect.getMetadata(
-        FACTORY_FOR_KEY,
+        'typeorm-entity-factory:FactoryFor',
         FactoryClass,
       );
       const factoryInstance = new FactoryClass(options.connection, container);
