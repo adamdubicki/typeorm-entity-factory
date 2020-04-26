@@ -3,6 +3,7 @@ import { FactoryContainer } from 'src/factory-container';
 import { getConnection, clearDB, getContainer } from 'src/tests/test-utils';
 import { Book } from 'src/tests/sample/entities/book';
 import { Genre } from 'src/tests/sample/entities/genre';
+import { Author } from 'src/tests/sample/entities/author';
 
 class FakeEntity {}
 
@@ -27,9 +28,13 @@ describe('entity-factory', () => {
   it('can provide for factories with init()', async () => {
     const bookFactory = container.getFactory(Book);
     const genreFactory = container.getFactory(Genre);
+    const authorFactory = container.getFactory(Author);
+    const famousAuthorFactory = container.getFactory(Author, 'famous');
 
     expect(bookFactory).toBeDefined();
     expect(genreFactory).toBeDefined();
+    expect(authorFactory).toBeDefined();
+    expect(famousAuthorFactory).toBeDefined();
     // @ts-ignore TS2345 (Ignore private method)
     expect(bookFactory.faker).toBeDefined();
     // @ts-ignore TS2345 (Ignore private method)

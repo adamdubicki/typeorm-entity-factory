@@ -217,8 +217,6 @@ export class Genre {
 
 An entity factory generates entities in bulk and stubs them with default data. To start off with we will make the GenreFactory to bulk create Genres. Each factory has an instance of [faker](https://github.com/marak/Faker.js/) for creating random data.
 
-
-
 ```typescript
 @FactoryFor(Genre)
 export class GenreFactory extends EntityFactory<Genre> {
@@ -408,11 +406,65 @@ await authorFactory.saveOne();
  */
 ```
 
+### Multiple Factories for an entity
+
+Since the container uses the entity name when retrieving the factory, we need to provide a namespace if we want to use multiple factories for the same entity.
+This can be achieved with the `namespace key` parameter in the FactoryFor decorator.
+
+For example, if we wanted to have a more specialized version of the AuthorFactory called FamousAuthorFactory.
+
+```typescript
+@FactoryFor(
+  Author,
+  'famous',
+) /** <-- Additional optional parameter to the FactoryFor **/
+export class FamousAuthorFactory extends EntityFactory<Author> {
+  /**
+   * @inheritdoc
+   * Create an Author with default parameters
+   * @returns an stubbed Author
+   */
+  async make(): Promise<Author> {
+    const author = new Author();
+    author.id = this.faker.random.uuid();
+
+    const bookFactory = await this.container.getFactory(Book);
+    const firstDigit: number = parseInt(author.id.charAt(0), 10);
+
+    if (firstDigit % 2 === 0) {
+      author.firstName = 'Kurt';
+      author.lastName = 'Vonnegut';
+      bookFactory.make({ title: 'Slaughterhouse 5' });
+      bookFactory.make({ title: 'Cats Cradle' });
+      bookFactory.make({ title: 'Breakfast of Champions' });
+    } else {
+      author.firstName = 'Douglas';
+      author.lastName = 'Adams';
+      bookFactory.make({ title: 'The Hitchhikers Guide to the Galaxy' });
+      bookFactory.make({ title: 'The Restaurant at the End of the Universe' });
+    }
+    return author;
+  }
+}
+```
+
+When we want to retrieve the FamousAuthorFactory from the container, we
+provide the namespace key.
+
+```typescript
+/** This will retrieve the original factory **/
+const authorFactory = container.getFactory(Author);
+
+/** This will retrieve the famous author factory **/
+const famousAuthorFactory = container.getFactory(Author, 'famous');
+```
+
 ## Examples
 
 See the examples directory for integrations.
 Currently there are example projects for:
-* NestJS
+
+- NestJS
 
 ## Local development
 
@@ -424,7 +476,7 @@ To use this repository for development:
 
 2. Instantiate the development and database container: `docker-compose up -d` The development container is configured with npm and a test suite for experimenting with changes. The docker-compose.yml maps the src files into the container, changes made in your local repository will be reflected in the container.
 
-*Note*: Disregard installation errors for [husky](https://github.com/adamdubicki/typeorm-entity-factory/issues/5). Husky expects a git path, but the git path is not mounted into the docker container.
+_Note_: Disregard installation errors for [husky](https://github.com/adamdubicki/typeorm-entity-factory/issues/5). Husky expects a git path, but the git path is not mounted into the docker container.
 
 3. You can then shell into the development container with `docker exec -it typeorm-entity-factory /bin/bash`.
 

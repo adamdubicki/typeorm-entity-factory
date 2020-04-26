@@ -6,7 +6,6 @@ import { UserFactory } from './user.entity.factory';
 import { getContainer } from '../factory-container';
 import { User } from './user.entity';
 
-
 describe('Users', () => {
   let app: INestApplication;
   let userFactory: UserFactory;
@@ -14,17 +13,16 @@ describe('Users', () => {
   let user2: User;
   let user3: User;
 
-  const create = '/users'
-  const findAllUsers = '/users'
-  const findOneUser = '/users/:id'
-  const remove = '/users/:id'
+  const create = '/users';
+  const findAllUsers = '/users';
+  const findOneUser = '/users/:id';
+  const remove = '/users/:id';
 
   beforeAll(async () => {
     // Initialize the application
     const moduleRef = await Test.createTestingModule({
-        imports: [AppModule],
-      })
-      .compile();
+      imports: [AppModule],
+    }).compile();
 
     app = moduleRef.createNestApplication();
     await app.init();
@@ -32,7 +30,6 @@ describe('Users', () => {
     // Declare our container
     const container = await getContainer();
     userFactory = container.getFactory(User);
-
     [user1, user2, user3] = await userFactory.saveMany(3);
   });
 
@@ -43,7 +40,7 @@ describe('Users', () => {
   it(`[GET] ${findAllUsers}`, async () => {
     const response = await request(app.getHttpServer())
       .get(findAllUsers)
-      .expect(HttpStatus.OK)
+      .expect(HttpStatus.OK);
 
     const users = response.body;
     expect(users).toContainEqual(user1);
@@ -54,20 +51,20 @@ describe('Users', () => {
   it(`[GET] ${findOneUser}`, async () => {
     const response = await request(app.getHttpServer())
       .get(findOneUser.replace(':id', user1.id.toString()))
-      .expect(HttpStatus.OK)
+      .expect(HttpStatus.OK);
 
     const user = response.body;
-    expect(user).toEqual(user1)
+    expect(user).toEqual(user1);
   });
 
   it(`[DELETE] ${remove}`, async () => {
     await request(app.getHttpServer())
       .delete(remove.replace(':id', user3.id.toString()))
-      .expect(HttpStatus.OK)
+      .expect(HttpStatus.OK);
 
     const response = await request(app.getHttpServer())
       .get(findAllUsers)
-      .expect(HttpStatus.OK)
+      .expect(HttpStatus.OK);
 
     const users = response.body;
     expect(users).toContainEqual(user1);
@@ -81,16 +78,16 @@ describe('Users', () => {
         .post(create)
         .send({
           firstName: 'Foo',
-          lastName: 'Bar'
+          lastName: 'Bar',
         })
         .expect(HttpStatus.CREATED)
-      ).body;
+    ).body;
 
     const response = await request(app.getHttpServer())
       .get(findAllUsers)
-      .expect(HttpStatus.OK)
+      .expect(HttpStatus.OK);
 
     const users = response.body;
-    expect(users).toContainEqual(newUser)
+    expect(users).toContainEqual(newUser);
   });
 });

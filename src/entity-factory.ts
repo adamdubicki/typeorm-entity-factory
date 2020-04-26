@@ -11,9 +11,8 @@ import { FactoryContainer } from 'src/factory-container';
  * factories must extend to produce entities.
  *
  * @typeparam E: The Entity that the factory generates
- * @typeparam O: The additional options the make function can take
  */
-export abstract class EntityFactory<E, O = {}> {
+export abstract class EntityFactory<E> {
   /**
    * @constructor
    * @property connection: TypeORM Database connection
@@ -38,7 +37,7 @@ export abstract class EntityFactory<E, O = {}> {
    * @param overrides: Params to override object with
    * @returns an instance of E
    */
-  abstract make(overrides?: Partial<E> & O): Promise<E>;
+  abstract make(overrides?: Partial<E>): Promise<E>;
 
   /**
    * @public
@@ -49,7 +48,7 @@ export abstract class EntityFactory<E, O = {}> {
    * @param overrides: The object to override with - passed down into make
    * @returns An array of saved entities
    */
-  async saveMany(count = 1, overrides?: Partial<E> & O): Promise<E[]> {
+  async saveMany(count = 1, overrides?: Partial<E>): Promise<E[]> {
     const entityArray: E[] = [];
 
     /** Create entities with make, apply override options */
@@ -92,7 +91,7 @@ export abstract class EntityFactory<E, O = {}> {
    * @param overrides: The object to override with - passed down into make()
    * @returns An entity
    */
-  async saveOne(overrides?: Partial<E> & O): Promise<E> {
+  async saveOne(overrides?: Partial<E>): Promise<E> {
     const [entity] = await this.saveMany(1, overrides);
     return entity;
   }
