@@ -16,5 +16,5 @@ import { EntityFactory } from 'src/entity-factory';
  */
 export interface IFactoryContainerOptions {
   connection: Connection;
-  factories: { new (...args: any[]): EntityFactory<any, any> }[];
+  factories: { new (...args: any[]): EntityFactory<any> }[];
 }
