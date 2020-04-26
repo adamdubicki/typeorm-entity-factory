@@ -414,10 +414,12 @@ This can be achieved with the `namespace key` parameter in the FactoryFor decora
 For example, if we wanted to have a more specialized version of the AuthorFactory called FamousAuthorFactory.
 
 ```typescript
-@FactoryFor(
-  Author,
-  'famous',
-) /** <-- Additional optional parameter to the FactoryFor **/
+import { Author } from 'src/tests/sample/entities/author';
+import { EntityFactory } from 'src/entity-factory';
+import { FactoryFor } from 'src/factory-for.decorator';
+import { Book } from 'src/tests/sample/entities/book';
+
+@FactoryFor(Author, 'famous') /** <-- Additional optional param */
 export class FamousAuthorFactory extends EntityFactory<Author> {
   /**
    * @inheritdoc
@@ -434,18 +436,28 @@ export class FamousAuthorFactory extends EntityFactory<Author> {
     if (firstDigit % 2 === 0) {
       author.firstName = 'Kurt';
       author.lastName = 'Vonnegut';
-      bookFactory.make({ title: 'Slaughterhouse 5' });
-      bookFactory.make({ title: 'Cats Cradle' });
-      bookFactory.make({ title: 'Breakfast of Champions' });
+      const book1 = await bookFactory.saveOne({
+        title: 'Slaughterhouse 5' 
+      });
+      const book2 = await bookFactory.saveOne({ 
+        title: 'Cats Cradle' 
+      });
+      author.books = [book1, book2];
     } else {
       author.firstName = 'Douglas';
       author.lastName = 'Adams';
-      bookFactory.make({ title: 'The Hitchhikers Guide to the Galaxy' });
-      bookFactory.make({ title: 'The Restaurant at the End of the Universe' });
+      const book1 = await bookFactory.saveOne({
+        title: 'The Hitchhikers Guide to the Galaxy',
+      });
+      const book2 = await bookFactory.saveOne({
+        title: 'The Restaurant at the End of the Universe',
+      });
+      author.books = [book1, book2];
     }
     return author;
   }
 }
+
 ```
 
 When we want to retrieve the FamousAuthorFactory from the container, we
