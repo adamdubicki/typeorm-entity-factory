@@ -13,6 +13,9 @@ A module for saving bulk entities for E2E database testing.
 
 ## State of Library
 
+[May 7th 2021]
+_The library is currently not maintained. If there is interest - I may return back to it in the future and continue development._
+
 This module is currently in testing phase. Before version 1.0.0 is released all of the development is considered experimental and is subject to change.
 
 ## Motivation
@@ -179,7 +182,7 @@ export class Author {
   })
   lastName: string;
 
-  @ManyToMany(type => Book, { onDelete: 'CASCADE' })
+  @ManyToMany((type) => Book, { onDelete: 'CASCADE' })
   @JoinTable()
   books: Book[];
 }
@@ -195,7 +198,7 @@ export class Book {
   })
   title: string;
 
-  @ManyToOne(type => Genre, { onDelete: 'SET NULL' })
+  @ManyToOne((type) => Genre, { onDelete: 'SET NULL' })
   @JoinColumn()
   genre: Genre;
 }
@@ -437,10 +440,10 @@ export class FamousAuthorFactory extends EntityFactory<Author> {
       author.firstName = 'Kurt';
       author.lastName = 'Vonnegut';
       const book1 = await bookFactory.saveOne({
-        title: 'Slaughterhouse 5' 
+        title: 'Slaughterhouse 5',
       });
-      const book2 = await bookFactory.saveOne({ 
-        title: 'Cats Cradle' 
+      const book2 = await bookFactory.saveOne({
+        title: 'Cats Cradle',
       });
       author.books = [book1, book2];
     } else {
@@ -457,7 +460,6 @@ export class FamousAuthorFactory extends EntityFactory<Author> {
     return author;
   }
 }
-
 ```
 
 When we want to retrieve the FamousAuthorFactory from the container, we
