@@ -34,9 +34,9 @@
     "lib"
   ],
   "dependencies": {
-    "faker": "4.1.0",
+    "faker": "^5.3.3",
     "typeorm": "0.2.22",
-    "@types/faker": "4.1.9"
+    "@types/faker": "^5.3.3"
   },
   "devDependencies": {
     "@types/jest": "24.9.1",
